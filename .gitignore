@@ -1,1 +1,30 @@
+# Node modules
+node_modules/
+
+# Build output
+dist/
+build/
+
+# Env config
 .env
+.env.*  # buat yang pake env banyak kayak .env.development, .env.local, dll
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+
+# TypeScript stuff
+*.tsbuildinfo
+
+# Coverage tools
+coverage
