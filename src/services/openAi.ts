@@ -49,3 +49,7 @@ export async function buildOpenAiPromt(userQuery: string, matches: { metadata?: 
     return prompt;
 
 }
+
+export function promtRag(userQuestion: string, ) {
+    
+} 
