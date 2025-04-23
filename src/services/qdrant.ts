@@ -46,9 +46,12 @@ export async function queryToQdrant(collectionName: string, query: number[]) {
         const searchResult = await client.query(collectionName, {
             query: query,
             limit: parseInt(process.env.LIMIT_QUERY_QDRANT),
+            score_threshold: 0.7,
             with_payload: true
         })
-        return searchResult.points;
+        const result: any = searchResult.points;
+        const sorted = result.sort((a, b) => a.payload.seqn - b.payload.seqn )
+        return sorted;
     }
     catch (e) {
         console.log(e)

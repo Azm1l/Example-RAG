@@ -17,7 +17,7 @@ export const chat = async (messages: string) => {
 
 export const embedText = async (texts: string[]) => {
     const response = await openAi.embeddings.create({
-        model: 'text-embedding-3-small',
+        model: 'text-embedding-ada-002',
         input: texts
     })
     return response.data.map(d => d.embedding);
@@ -25,7 +25,7 @@ export const embedText = async (texts: string[]) => {
 
 export const embedTextUser = async (texts: string) => {
     const response = await openAi.embeddings.create({
-        model: 'text-embedding-3-small',
+        model: 'text-embedding-ada-002',
         input: texts
     })
     return response.data[0].embedding;
@@ -50,6 +50,19 @@ export async function buildOpenAiPromt(userQuery: string, matches: { metadata?: 
 
 }
 
-export function promtRag(userQuestion: string, ) {
+export function promtRag(userQuestion: string, queryResult: {payload: {text: string}}[]) {
+    const context = queryResult.map(res => res.payload.text).join("\n\n");
+    const prompt = `
+    Gunakan konteks di bawah ini untuk menjawab pertanyaan pengguna.
     
+    Konteks:
+    ${context}
+    
+    Pertanyaan:
+    ${userQuestion}
+    
+    Jawaban:
+    `;
+  
+      return prompt;
 } 
