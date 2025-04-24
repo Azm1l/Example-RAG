@@ -8,6 +8,7 @@ export const chatGPT = async (req: Request, res: Response)=> {
             res.status(400).json({
                 error: 'message must have some value'
             })
+            return
         }
         const reply = await chat(messages);
         res.json({ reply })

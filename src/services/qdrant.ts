@@ -41,10 +41,26 @@ export async function insertToQdrant(collectionName: string, points: QdrantPoint
     }
 }
 
-export async function queryToQdrant(collectionName: string, query: number[]) {
+export async function queryToQdrant(collectionName: string, query: number[], title: string, section: string) {
     try {
         const searchResult = await client.query(collectionName, {
             query: query,
+            filter: {
+                must: [
+                    {
+                        key: "title",
+                        match: {
+                            value: title
+                        }
+                    },
+                    {
+                        key: "section",
+                        match: {
+                            value: section
+                        }
+                    }
+                ]
+            },
             limit: parseInt(process.env.LIMIT_QUERY_QDRANT),
             score_threshold: 0.7,
             with_payload: true

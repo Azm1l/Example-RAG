@@ -18,12 +18,12 @@ export async function uploadToAzureHandler(req: Request, res: Response) {
 
 export async function generateSasUrlHandler(req: Request, res: Response) {
     try {
-        const { blobName, expiryTime } = req.query;
-        if (!blobName || !expiryTime) {
+        const { blobName } = req.query;
+        if (!blobName) {
             res.status(400).json({ error: "Container name, blob name, and expiry time are required" });
             return;
         }
-
+        const expiryTime = new Date(Date.now() + 10 * 60 * 1000).toISOString();
         const sasUrl = await generateSasUrl(
             blobName as string,
             expiryTime as string

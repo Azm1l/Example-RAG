@@ -7,8 +7,8 @@ import {
 } from "@azure/storage-blob";
 import path = require("path");
 
-let accountName = process.env.AZURE_ACCOUNT_KEY;
-let accountKey = process.env.AZURE_ACCOUNT_NAME;
+let accountName = process.env.AZURE_ACCOUNT_NAME;
+let accountKey = process.env.AZURE_ACCOUNT_KEY;
 let containerName = process.env.AZURE_BLOB_CONTAINER;
 
 const credential = new StorageSharedKeyCredential(accountName, accountKey);
@@ -26,9 +26,9 @@ const generateBlobNameWithTimestamp = (originalName: string) => {
 };
 
 export async function uploadToAzure(file: Express.Multer.File, blobName) {
-    if (!isValidContainerName(containerName)) {
-        throw new Error("Invalid container name.");
-    }
+    //if (!isValidContainerName(containerName)) {
+    //    throw new Error("Invalid container name.");
+    //}
     const containerClient = blobServiceClient.getContainerClient(containerName);
     await containerClient.createIfNotExists();
 
@@ -46,10 +46,8 @@ export async function generateSasUrl(
     expiryTime: string
 ) {
     const expiryDate = new Date(expiryTime);
-
     const containerClient = blobServiceClient.getContainerClient(containerName);
     const blobClient = containerClient.getBlobClient(blobName);
-
     const sasToken = generateBlobSASQueryParameters(
         {
             containerName,
@@ -64,3 +62,11 @@ export async function generateSasUrl(
 
     return `${blobClient.url}?${sasToken}`;
 };
+
+export async function deleteBlobFile (blobName: string) {
+    const containerClient = blobServiceClient.getContainerClient(containerName);
+    const blobClient = containerClient.getBlobClient(blobName);
+    await blobClient.deleteIfExists();
+    return 'File deleted';
+
+}

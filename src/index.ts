@@ -5,15 +5,19 @@ import express from 'express';
 import chatRouter from './routes/chat'
 import getCollectionQdrantRouter from './routes/getCollectionQdrant'
 import initCollectionQdrantRouter from './routes/initCollection'
-import insertVectorQdrantRouter from './routes/insertQdranVector.route'
+import insertVectorQdrantRouter from './routes/insertQdranVectorRoute'
 import askRagRouter from './routes/askRagRoute'
 import azureBlobRouter from './routes/azureStorageRouter'
 import azureSasRouter from './routes/azureSasRouter'
 import documentLocalRoute from './routes/documentLocalRouter'
+import { setupSwagger } from './config/swagger';
+import path from 'path';
 
 const app = express();
+app.use('/public', express.static(path.join(__dirname, '..','public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
+setupSwagger(app)
 
 app.use('/chat', chatRouter)
 app.use('/get-collection', getCollectionQdrantRouter);

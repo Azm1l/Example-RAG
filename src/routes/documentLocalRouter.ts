@@ -1,3 +1,39 @@
+/**
+ * @swagger
+ * /upload-document:
+ *   post:
+ *     summary: Upload dokumen untuk dijadikan data AI
+ *     tags: [Internal RAG API]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/from-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               file:
+ *                 type: string
+ *                 format: binary
+ *               title:
+ *                 type: string
+ *                 example: "Daftar Absensi Karyawan A bulan Maret 2025"
+ *               section:
+ *                 type: string
+ *                 example: "20"
+ *     responses:
+ *       200:
+ *         description: Hasil Proses
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 result:
+ *                   type: string
+ *                   example: "data saved"
+ */
+
+
 import express from 'express'
 import multer from 'multer'
 import { processPdfHandler } from '../controllers/documentLocalController'
