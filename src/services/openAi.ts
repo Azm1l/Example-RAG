@@ -1,10 +1,34 @@
 import OpenAI from "openai";
 
 const openAi = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY
+    apiKey: process.env.OPENAI_API_KEY,
+})
+
+const azureApiKey = process.env.AZURE_OPENAI_KEY;
+const azureResource = process.env.AZURE_RESOURCE;
+const azureModel = process.env.AZURE_OPENAI_MODEL;
+const azureApiVersion = process.env.AZURE_API_VERSION;
+
+
+const azureOpenAi = new OpenAI({
+    apiKey: azureApiKey,
+    baseURL: `${azureResource}/openai/deployments/${azureModel}`,
+    defaultQuery: {'api-version': azureApiVersion},
+    defaultHeaders: {'api-key': azureApiKey}
 })
 
 export const chat = async (messages: string) => {
+    const response = await azureOpenAi.chat.completions.create({
+        model: '',
+        messages: [{
+            role: 'user',
+            content: messages
+        }]
+    })
+    return response.choices[0].message.content;
+}
+
+export const chatOri = async (messages: string) => {
     const response = await openAi.chat.completions.create({
         model: 'gpt-4o',
         messages: [{
