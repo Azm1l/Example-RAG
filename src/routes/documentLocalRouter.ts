@@ -28,9 +28,9 @@
  *             schema:
  *               type: object
  *               properties:
- *                 result:
+ *                 blobName:
  *                   type: string
- *                   example: "data saved"
+ *                   example: "file_blablabla..."
  */
 
 

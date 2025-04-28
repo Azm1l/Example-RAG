@@ -10,6 +10,7 @@ import askRagRouter from './routes/askRagRoute'
 import azureBlobRouter from './routes/azureStorageRouter'
 import azureSasRouter from './routes/azureSasRouter'
 import documentLocalRoute from './routes/documentLocalRouter'
+import deleteFileRoute from './routes/azureDeleteRouter'
 import { setupSwagger } from './config/swagger';
 import path from 'path';
 
@@ -27,6 +28,7 @@ app.use('/ask-rag', askRagRouter)
 app.use('/azure-storage', azureBlobRouter);
 app.use('/generate-url', azureSasRouter);
 app.use('/upload-document', documentLocalRoute)
+app.use('/delete-file', deleteFileRoute)
 
 
 app.get('/', (req, res) => {
