@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { processPdf } from "../services/documentLocal";
+import { uploadToAzure } from "../services/azureBlobStorage";
 
 export async function processPdfHandler(req: Request, res: Response) {
     try {
@@ -22,8 +23,9 @@ export async function processPdfHandler(req: Request, res: Response) {
             })
             return
         }
+        const file = await uploadToAzure(req.file, title)
         const result = await processPdf(req.file, title, section);
-        res.json({result});
+        res.json({file});
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

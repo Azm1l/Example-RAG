@@ -25,7 +25,7 @@ const generateBlobNameWithTimestamp = (originalName: string) => {
     return `${baseName}_${timestamp}${ext}`;
 };
 
-export async function uploadToAzure(file: Express.Multer.File, blobName) {
+export async function uploadToAzure(file: Express.Multer.File, blobName: string) {
     //if (!isValidContainerName(containerName)) {
     //    throw new Error("Invalid container name.");
     //}
