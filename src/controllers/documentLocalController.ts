@@ -11,6 +11,13 @@ export async function processPdfHandler(req: Request, res: Response) {
             })
             return
         }
+
+        if (req.file.mimetype !== 'application/pdf') {
+            return res.status(400).json({
+                error: 'file must be a PDF'
+            });
+        }
+        
         if (!title) {
             res.status(400).json({
                 error: 'title is required'
